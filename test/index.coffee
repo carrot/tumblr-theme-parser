@@ -26,11 +26,34 @@ describe 'parser', ->
         }
       }
     ])
+    parser.parse('{Likes width="200" limit="5"}').should.eql([
+      {
+        'tagName': 'Likes'
+        'attributes': {
+          'width': '200'
+          'limit': '5'
+        }
+      }
+    ])
 
   it 'should parse blocks', ->
     parser.parse('{block:Posts}{/block:Posts}').should.eql([
       {
         'contents': []
+        'attributes': {}
+        'tagName': 'Posts'
+      }
+    ])
+
+  it 'should parse blocks with attributes', ->
+    parser.parse(
+      '{block:Posts inlineMediaWidth="500"}{/block:Posts}'
+    ).should.eql([
+      {
+        'contents': []
+        'attributes': {
+          "inlineMediaWidth": "500"
+        }
         'tagName': 'Posts'
       }
     ])
@@ -43,9 +66,11 @@ describe 'parser', ->
         'contents': [
           {
             'contents': []
+            'attributes': {}
             'tagName': 'Caption'
           }
         ]
+        'attributes': {}
         'tagName': 'Posts'
       }
     ])
