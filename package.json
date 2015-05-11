@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "author": "Sean Lang <slang800@gmail.com>",
   "devDependencies": {
+    "coffee-script": "^1.9.2",
     "mocha": "^2.2.4",
     "pegjs": "^0.8.0",
     "should": "^6.0.1"
