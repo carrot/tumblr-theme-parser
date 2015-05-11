@@ -9,11 +9,19 @@ describe 'parser', ->
 
   it 'should parse interpolation', ->
     parser.parse('{Title}').should.eql([
-      {tagName: 'Title', 'attributes': {}, 'type': 'text'}
+      {
+        tagName: 'Title'
+        attributes: {}
+        type: 'text'
+      }
     ])
     parser.parse('<title>{Title}</title>').should.eql([
       '<title>'
-      {tagName: 'Title', 'attributes': {}, 'type': 'text'}
+      {
+        tagName: 'Title'
+        attributes: {}
+        type: 'text'
+      }
       '</title>'
     ])
 
@@ -28,15 +36,15 @@ describe 'parser', ->
     ''').should.eql([
       '<style type="text/css">\n  #content {\n    background-color: '
       {
-        'attributes': {}
-        'tagName': 'Content Background'
-        'type': 'color'
+        attributes: {}
+        tagName: 'Content Background'
+        type: 'color'
       }
       ';\n    color: '
       {
-        'attributes': {}
-        'tagName': 'Text'
-        'type': 'color'
+        attributes: {}
+        tagName: 'Text'
+        type: 'color'
       }
       ';\n  }\n</style>'
 
@@ -45,31 +53,31 @@ describe 'parser', ->
   it 'should parse interpolation with attributes', ->
     parser.parse('{Likes width="200"}').should.eql([
       {
-        'tagName': 'Likes'
-        'attributes': {
-          'width': '200'
+        tagName: 'Likes'
+        attributes: {
+          width: '200'
         }
-        'type': 'text'
+        type: 'text'
       }
     ])
     parser.parse('{Likes width="200" limit="5"}').should.eql([
       {
-        'tagName': 'Likes'
-        'attributes': {
-          'width': '200'
-          'limit': '5'
+        tagName: 'Likes'
+        attributes: {
+          width: '200'
+          limit: '5'
         }
-        'type': 'text'
+        type: 'text'
       }
     ])
 
   it 'should parse blocks', ->
     parser.parse('{block:Posts}{/block:Posts}').should.eql([
       {
-        'contents': []
-        'attributes': {}
-        'tagName': 'Posts'
-        'type': 'block'
+        contents: []
+        attributes: {}
+        tagName: 'Posts'
+        type: 'block'
       }
     ])
 
@@ -78,12 +86,12 @@ describe 'parser', ->
       '{block:Posts inlineMediaWidth="500"}{/block:Posts}'
     ).should.eql([
       {
-        'contents': []
-        'attributes': {
-          "inlineMediaWidth": "500"
+        contents: []
+        attributes: {
+          inlineMediaWidth: '500'
         }
-        'tagName': 'Posts'
-        'type': 'block'
+        tagName: 'Posts'
+        type: 'block'
       }
     ])
 
@@ -92,17 +100,17 @@ describe 'parser', ->
       '{block:Posts}{block:Caption}{/block:Caption}{/block:Posts}'
     ).should.eql([
       {
-        'contents': [
+        contents: [
           {
-            'contents': []
-            'attributes': {}
-            'tagName': 'Caption'
-            'type': 'block'
+            contents: []
+            attributes: {}
+            tagName: 'Caption'
+            type: 'block'
           }
         ]
-        'attributes': {}
-        'tagName': 'Posts'
-        'type': 'block'
+        attributes: {}
+        tagName: 'Posts'
+        type: 'block'
       }
     ])
 
@@ -129,54 +137,54 @@ describe 'parser', ->
     ''').should.eql([
       '<html>\n  <head>\n  </head>\n  <body>\n    '
       {
-        'attributes': {}
-        'contents': [
+        attributes: {}
+        contents: [
           '\n      <article class="'
           {
-            'attributes': {}
-            'tagName': 'PostType'
-            'type': 'text'
+            attributes: {}
+            tagName: 'PostType'
+            type: 'text'
           }
           '">\n      '
           {
-            'attributes': {}
-            'contents': [
+            attributes: {}
+            contents: [
               '\n      '
               {
-                'attributes': {}
-                'contents': [
+                attributes: {}
+                contents: [
                   '\n      <a href="'
                   {
-                    'attributes': {}
-                    'tagName': 'Permalink'
-                    'type': 'text'
+                    attributes: {}
+                    tagName: 'Permalink'
+                    type: 'text'
                   }
                   '">\n        <h2>'
                   {
-                    'attributes': {}
-                    'tagName': 'Title'
-                    'type': 'text'
+                    attributes: {}
+                    tagName: 'Title'
+                    type: 'text'
                   }
                   '</h2>\n      </a>\n      '
                 ]
-                'tagName': 'Title'
-                'type': 'block'
+                tagName: 'Title'
+                type: 'block'
               }
               '\n      '
               {
-                'attributes': {}
-                'tagName': 'Body'
-                'type': 'text'
+                attributes: {}
+                tagName: 'Body'
+                type: 'text'
               }
               '\n      '
             ]
-            'tagName': 'Text'
-            'type': 'block'
+            tagName: 'Text'
+            type: 'block'
           }
           '\n      </article>\n    '
         ]
-        'tagName': 'Posts'
-        'type': 'block'
+        tagName: 'Posts'
+        type: 'block'
       }
       '\n   </body>\n</html>'
     ])
