@@ -1,4 +1,6 @@
 # Tumblr Theme Parser
+[![Build Status](http://img.shields.io/travis/slang800/tumblr-theme-parser.svg?style=flat-square)](https://travis-ci.org/slang800/tumblr-theme-parser) [![NPM version](http://img.shields.io/npm/v/tumblr-theme-parser.svg?style=flat-square)](https://www.npmjs.org/package/tumblr-theme-parser) [![NPM license](http://img.shields.io/npm/l/tumblr-theme-parser.svg?style=flat-square)](https://www.npmjs.org/package/tumblr-theme-parser)
+
 A Tumblr theme parser / compiler.
 
 I've working in a static microblogging generator that is compatible with Tumblr themes [http://www.tumblr.com/themes/](http://www.tumblr.com/themes/) so I wrote a parser for the Tumblr's template language used on custom themes [http://www.tumblr.com/docs/en/custom_themes](http://www.tumblr.com/docs/en/custom_themes) and thanks to [pyparsing](http://pyparsing.wikispaces.com/) was not so hard to create it.
