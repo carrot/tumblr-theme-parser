@@ -1,0 +1,25 @@
+{
+  "name": "tumblr-theme-parser",
+  "description": "parse and compile tumblr themes",
+  "version": "0.0.0",
+  "author": "Sean Lang <slang800@gmail.com>",
+  "devDependencies": {
+    "mocha": "^2.2.4",
+    "pegjs": "^0.8.0",
+    "should": "^6.0.1"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "keywords": [
+    "tumblr",
+    "theme",
+    "parse",
+    "compile"
+  ],
+  "license": "GPLv3",
+  "main": "lib",
+  "scripts": {
+    "test": "mocha"
+  }
+}
