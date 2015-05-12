@@ -1,32 +1,32 @@
-parser = require '../lib/parser'
+{compile, parse} = require '../lib'
 should = require 'should'
 
 describe 'parser', ->
   it 'should parse regular/static text', ->
-    parser.parse('<title>My Title</title>').should.eql([
+    parse('<title>My Title</title>').should.eql([
       '<title>My Title</title>'
     ])
 
   it 'should parse interpolation', ->
-    parser.parse('{Title}').should.eql([
+    parse('{Title}').should.eql([
       {
         tagName: 'Title'
         attributes: {}
-        type: 'text'
+        type: ''
       }
     ])
-    parser.parse('<title>{Title}</title>').should.eql([
+    parse('<title>{Title}</title>').should.eql([
       '<title>'
       {
         tagName: 'Title'
         attributes: {}
-        type: 'text'
+        type: ''
       }
       '</title>'
     ])
 
   it 'should parse color interpolation', ->
-    parser.parse('''
+    parse('''
       <style type="text/css">
         #content {
           background-color: {color:Content Background};
@@ -51,28 +51,28 @@ describe 'parser', ->
     ])
 
   it 'should parse interpolation with attributes', ->
-    parser.parse('{Likes width="200"}').should.eql([
+    parse('{Likes width="200"}').should.eql([
       {
         tagName: 'Likes'
         attributes: {
           width: '200'
         }
-        type: 'text'
+        type: ''
       }
     ])
-    parser.parse('{Likes width="200" limit="5"}').should.eql([
+    parse('{Likes width="200" limit="5"}').should.eql([
       {
         tagName: 'Likes'
         attributes: {
           width: '200'
           limit: '5'
         }
-        type: 'text'
+        type: ''
       }
     ])
 
   it 'should parse blocks', ->
-    parser.parse('{block:Posts}{/block:Posts}').should.eql([
+    parse('{block:Posts}{/block:Posts}').should.eql([
       {
         contents: []
         attributes: {}
@@ -82,7 +82,7 @@ describe 'parser', ->
     ])
 
   it 'should parse blocks with attributes', ->
-    parser.parse(
+    parse(
       '{block:Posts inlineMediaWidth="500"}{/block:Posts}'
     ).should.eql([
       {
@@ -96,7 +96,7 @@ describe 'parser', ->
     ])
 
   it 'should parse nested blocks', ->
-    parser.parse(
+    parse(
       '{block:Posts}{block:Caption}{/block:Caption}{/block:Posts}'
     ).should.eql([
       {
@@ -115,7 +115,7 @@ describe 'parser', ->
     ])
 
   it 'should parse nested blocks', ->
-    parser.parse('''
+    parse('''
       <html>
         <head>
         </head>
@@ -143,7 +143,7 @@ describe 'parser', ->
           {
             attributes: {}
             tagName: 'PostType'
-            type: 'text'
+            type: ''
           }
           '">\n      '
           {
@@ -157,13 +157,13 @@ describe 'parser', ->
                   {
                     attributes: {}
                     tagName: 'Permalink'
-                    type: 'text'
+                    type: ''
                   }
                   '">\n        <h2>'
                   {
                     attributes: {}
                     tagName: 'Title'
-                    type: 'text'
+                    type: ''
                   }
                   '</h2>\n      </a>\n      '
                 ]
@@ -174,7 +174,7 @@ describe 'parser', ->
               {
                 attributes: {}
                 tagName: 'Body'
-                type: 'text'
+                type: ''
               }
               '\n      '
             ]
@@ -188,3 +188,40 @@ describe 'parser', ->
       }
       '\n   </body>\n</html>'
     ])
+
+describe 'compiler', ->
+  it 'should compile regular/static text', ->
+    compile(
+      '<title>My Title</title>'
+    ).should.equal(
+      '<title>My Title</title>'
+    )
+
+  it 'should compile interpolation', ->
+    compile(
+      '<title>{Title}</title>'
+      'Title': 'Untitled'
+    ).should.equal(
+      '<title>Untitled</title>'
+    )
+
+  it 'should compile color interpolation', ->
+    compile(
+      '''
+      <style type="text/css">
+        #content {
+          background-color: {color:Content Background};
+          color: {color:Text};
+        }
+      </style>
+      '''
+      'color:Content Background': '#ccc'
+      'color:Text': '#000'
+    ).should.equal('''
+      <style type="text/css">
+        #content {
+          background-color: #ccc;
+          color: #000;
+        }
+      </style>
+    ''')
