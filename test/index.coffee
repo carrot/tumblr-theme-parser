@@ -225,3 +225,55 @@ describe 'compiler', ->
         }
       </style>
     ''')
+
+  it 'should parse nested blocks', ->
+    compile(
+      '''
+      <html>
+        <head>
+        </head>
+        <body>
+          {block:Posts}
+          <article class="{PostType}">
+            {block:Text}
+            {block:Title}
+            <a href="{Permalink}">
+              <h2>{Title}</h2>
+            </a>
+            {/block:Title}
+            {Body}
+            {/block:Text}
+          </article>
+          {/block:Posts}
+        </body>
+      </html>
+      '''
+      'block:Posts': [
+        {
+          'block:Body': true
+          'block:Title': true
+          'Body': '<p>test<br></p>'
+          'Permalink': 'http:/test.tumblr.com/post/118449891560/test'
+          'PostType': 'text'
+          'Title': 'test'
+        }
+      ]
+    ).should.equal('''
+      <html>
+        <head>
+        </head>
+        <body>
+
+          <article class="text">
+
+            <a href="http:/test.tumblr.com/post/118449891560/test">
+              <h2>test</h2>
+            </a>
+
+            <p>test<br></p>
+
+          </article>
+
+        </body>
+      </html>
+    ''')
