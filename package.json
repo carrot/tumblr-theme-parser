@@ -3,6 +3,12 @@
   "description": "parse and compile tumblr themes",
   "version": "0.0.0",
   "author": "Sean Lang <slang800@gmail.com>",
+  "bin": {
+    "tumblr-theme-parser": "./bin/index.js"
+  },
+  "dependencies": {
+    "argparse": "^1.0.2"
+  },
   "devDependencies": {
     "coffee-script": "^1.9.2",
     "mocha": "^2.2.4",
