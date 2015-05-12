@@ -226,11 +226,12 @@ describe 'compiler', ->
       </style>
     ''')
 
-  it 'should parse nested blocks', ->
+  it 'should compile nested blocks', ->
     compile(
       '''
       <html>
         <head>
+          <title>{Title}</title>
         </head>
         <body>
           {block:Posts}
@@ -248,6 +249,7 @@ describe 'compiler', ->
         </body>
       </html>
       '''
+      'Title': 'My Title'
       'block:Posts': [
         {
           'block:Body': true
@@ -255,19 +257,38 @@ describe 'compiler', ->
           'Body': '<p>test<br></p>'
           'Permalink': 'http:/test.tumblr.com/post/118449891560/test'
           'PostType': 'text'
-          'Title': 'test'
+          'Title': 'My first post'
+        }
+        {
+          'block:Body': true
+          'block:Title': true
+          'Body': '<p>test<br></p>'
+          'Permalink': 'http:/test.tumblr.com/post/891560118449/test'
+          'PostType': 'text'
+          'Title': 'My second post'
         }
       ]
     ).should.equal('''
       <html>
         <head>
+          <title>My Title</title>
         </head>
         <body>
 
           <article class="text">
 
             <a href="http:/test.tumblr.com/post/118449891560/test">
-              <h2>test</h2>
+              <h2>My first post</h2>
+            </a>
+
+            <p>test<br></p>
+
+          </article>
+
+          <article class="text">
+
+            <a href="http:/test.tumblr.com/post/891560118449/test">
+              <h2>My second post</h2>
             </a>
 
             <p>test<br></p>
