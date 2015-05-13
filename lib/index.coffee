@@ -1,6 +1,24 @@
 {parse} = require './parser'
+cheerio = require 'cheerio'
 
 compile = (text, data) ->
+  $ = cheerio.load(text)
+  metaTags = $('meta')
+  for tag in metaTags
+    key = $(tag).attr('name')
+    v = $(tag).attr('content')
+
+    if not key? or data[key]? then continue
+
+    if key[0...3] is 'if:'
+      if v is '0'
+        v = false
+      else if v is '1'
+        v = true
+
+    console.warn key, v
+    data[key] = v
+
   # fix up tumblr data
   if data?['block:Posts']?
     for post in data['block:Posts']
