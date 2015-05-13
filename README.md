@@ -8,8 +8,11 @@ It should be noted that this parser is slightly more strict than the one Tumblr 
 This parser allows case insensitivity in tag and variable names (because we want to match the Tumblr compiler as closely as possible). However, you should still use PascalCase for all of your identifiers, because this is the convention in Tumblr themes.
 
 ## Usage
+### CLI
+The Markup of the theme is passed in via `STDIN`, and the compiled theme is sent to `STDOUT`. Data for the theme is passed in the form of a file path. Warnings (like undefined variables or other non-fatal issues) are sent to `STDERR`. A typical command might look like this:
+
 ```bash
-$ tumblr-theme-parser -d data.json < theme.html
+$ tumblr-theme-parser -d data.json < theme.html > compiled-theme.html
 ```
 
 For example, with a Tumblr theme like this (saved as `theme.html`):
@@ -92,4 +95,12 @@ The rendered HTML looks like this:
 
   </body>
 </html>
+```
+
+## JavaScript
+Usage in JavaScript is very simple. The module exports an object containing 2 functions: `compile` and `parse`. The `compile` function takes the input HTML & optional associated data, and returns the compiled HTML.
+
+```javascript
+compile = require('tumblr-theme-parser').compile
+compiledHtml = compile(themeHtml, data)
 ```
