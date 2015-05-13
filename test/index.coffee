@@ -339,3 +339,61 @@ describe 'compiler', ->
         </body>
       </html>
     ''')
+
+  it 'should not compile "if" vars in interpolation', ->
+    compile('''
+      <html>
+        <head>
+          <meta name="if:test" content="1"/>
+        </head>
+        <body>
+          <p>{if:test}</p>
+        </body>
+      </html>
+    ''').should.equal('''
+      <html>
+        <head>
+          <meta name="if:test" content="1"/>
+        </head>
+        <body>
+          <p>{if:test}</p>
+        </body>
+      </html>
+    ''')
+
+  it 'should compile "if" blocks', ->
+    compile('''
+      <html>
+        <head>
+          <meta name="if:Show people I follow" content="1"/>
+          <meta name="if:Reverse pagination" content="0"/>
+        </head>
+        <body>
+          {block:IfNotReversePagination}
+          <a href="...">Previous</a> <a href="...">Next</a>
+          {/block:IfNotReversePagination}
+
+          {block:IfReversePagination}
+          <a href="...">Next</a> <a href="...">Previous</a>
+          {/block:IfReversePagination}
+
+          {block:IfShowPeopleIFollow}
+          <div id="following">...</div>
+          {/block:IfShowPeopleIFollow}
+        </body>
+      </html>
+    ''').should.equal('''
+      <html>
+        <head>
+          <meta name="if:Show people I follow" content="1"/>
+          <meta name="if:Reverse pagination" content="0"/>
+        </head>
+        <body>
+
+          <a href="...">Previous</a> <a href="...">Next</a>
+
+          <div id="following">...</div>
+
+        </body>
+      </html>
+    ''')
