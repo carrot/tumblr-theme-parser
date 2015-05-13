@@ -56,7 +56,11 @@ compile = (text, data = {}) ->
       else if element.type isnt 'block'
         type = element.type
         if type is ''
-          output += data[element.tagName]
+          value = data[element.tagName]
+          if value?
+            output += value
+          else
+            console.warn "Variable \"#{element.tagName}\" is not defined"
         else
           output += data["#{type}:#{element.tagName}"]
       else
