@@ -1,6 +1,19 @@
 {parse} = require './parser'
 cheerio = require 'cheerio'
 
+allKeysToLowerCase = (obj) ->
+  output = {}
+  for i of obj
+    if Object::toString.apply(obj[i]) is '[object Object]'
+      output[i.toLowerCase()] = allKeysToUpperCase(obj[i])
+    else if Array.isArray(obj[i])
+      output[i.toLowerCase()] = []
+      for e in obj[i]
+        output[i.toLowerCase()].push allKeysToLowerCase(e)
+    else
+      output[i.toLowerCase()] = obj[i]
+  output
+
 compile = (text, data) ->
   $ = cheerio.load(text)
   metaTags = $('meta')
@@ -23,8 +36,9 @@ compile = (text, data) ->
   if data?['block:Posts']?
     for post in data['block:Posts']
       type = post['PostType']
-      type = type[0].toUpperCase() + type[1...]
       post["block:#{type}"] = true
+
+  data = allKeysToLowerCase(data)
 
   output = ''
   compileBlock = (ast, data) ->

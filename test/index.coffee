@@ -10,7 +10,7 @@ describe 'parser', ->
   it 'should parse interpolation', ->
     parse('{Title}').should.eql([
       {
-        tagName: 'Title'
+        tagName: 'title'
         attributes: {}
         type: ''
       }
@@ -18,7 +18,7 @@ describe 'parser', ->
     parse('<title>{Title}</title>').should.eql([
       '<title>'
       {
-        tagName: 'Title'
+        tagName: 'title'
         attributes: {}
         type: ''
       }
@@ -37,13 +37,13 @@ describe 'parser', ->
       '<style type="text/css">\n  #content {\n    background-color: '
       {
         attributes: {}
-        tagName: 'Content Background'
+        tagName: 'content background'
         type: 'color'
       }
       ';\n    color: '
       {
         attributes: {}
-        tagName: 'Text'
+        tagName: 'text'
         type: 'color'
       }
       ';\n  }\n</style>'
@@ -53,7 +53,7 @@ describe 'parser', ->
   it 'should parse interpolation with attributes', ->
     parse('{Likes width="200"}').should.eql([
       {
-        tagName: 'Likes'
+        tagName: 'likes'
         attributes: {
           width: '200'
         }
@@ -62,7 +62,7 @@ describe 'parser', ->
     ])
     parse('{Likes width="200" limit="5"}').should.eql([
       {
-        tagName: 'Likes'
+        tagName: 'likes'
         attributes: {
           width: '200'
           limit: '5'
@@ -76,7 +76,7 @@ describe 'parser', ->
       {
         contents: []
         attributes: {}
-        tagName: 'Posts'
+        tagName: 'posts'
         type: 'block'
       }
     ])
@@ -90,7 +90,7 @@ describe 'parser', ->
         attributes: {
           inlineMediaWidth: '500'
         }
-        tagName: 'Posts'
+        tagName: 'posts'
         type: 'block'
       }
     ])
@@ -104,12 +104,12 @@ describe 'parser', ->
           {
             contents: []
             attributes: {}
-            tagName: 'Caption'
+            tagName: 'caption'
             type: 'block'
           }
         ]
         attributes: {}
-        tagName: 'Posts'
+        tagName: 'posts'
         type: 'block'
       }
     ])
@@ -142,7 +142,7 @@ describe 'parser', ->
           '\n      <article class="'
           {
             attributes: {}
-            tagName: 'PostType'
+            tagName: 'posttype'
             type: ''
           }
           '">\n      '
@@ -156,34 +156,34 @@ describe 'parser', ->
                   '\n      <a href="'
                   {
                     attributes: {}
-                    tagName: 'Permalink'
+                    tagName: 'permalink'
                     type: ''
                   }
                   '">\n        <h2>'
                   {
                     attributes: {}
-                    tagName: 'Title'
+                    tagName: 'title'
                     type: ''
                   }
                   '</h2>\n      </a>\n      '
                 ]
-                tagName: 'Title'
+                tagName: 'title'
                 type: 'block'
               }
               '\n      '
               {
                 attributes: {}
-                tagName: 'Body'
+                tagName: 'body'
                 type: ''
               }
               '\n      '
             ]
-            tagName: 'Text'
+            tagName: 'text'
             type: 'block'
           }
           '\n      </article>\n    '
         ]
-        tagName: 'Posts'
+        tagName: 'posts'
         type: 'block'
       }
       '\n   </body>\n</html>'
