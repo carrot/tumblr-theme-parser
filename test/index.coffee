@@ -300,8 +300,7 @@ describe 'compiler', ->
     ''')
 
   it 'should compile with meta tag defaults', ->
-    compile(
-      '''
+    compile('''
       <html>
         <head>
           <meta name="color:Background" content="#ccc"/>
@@ -320,8 +319,7 @@ describe 'compiler', ->
           ...
         </body>
       </html>
-      '''
-    ).should.equal('''
+    ''').should.equal('''
       <html>
         <head>
           <meta name="color:Background" content="#ccc"/>
