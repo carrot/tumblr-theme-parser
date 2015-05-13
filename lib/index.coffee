@@ -14,7 +14,7 @@ allKeysToLowerCase = (obj) ->
       output[i.toLowerCase()] = obj[i]
   output
 
-compile = (text, data) ->
+compile = (text, data = {}) ->
   $ = cheerio.load(text)
   metaTags = $('meta')
   for tag in metaTags
@@ -29,7 +29,6 @@ compile = (text, data) ->
       else if v is '1'
         v = true
 
-    console.warn key, v
     data[key] = v
 
   # fix up tumblr data
