@@ -298,3 +298,46 @@ describe 'compiler', ->
         </body>
       </html>
     ''')
+
+  it 'should compile with meta tag defaults', ->
+    compile(
+      '''
+      <html>
+        <head>
+          <meta name="color:Background" content="#ccc"/>
+          <meta name="color:Content Background" content="#fff"/>
+          <meta name="font:Body" content="Arial, Helvetica, sans-serif"/>
+          <meta name="color:Text" content="#000"/>
+          <style type="text/css">
+            #content {
+              background-color: {color:Content Background};
+              color: {color:Text};
+              font: 30px {font:Body};
+            }
+          </style>
+        </head>
+        <body bgcolor="{color:Background}">
+          ...
+        </body>
+      </html>
+      '''
+    ).should.equal('''
+      <html>
+        <head>
+          <meta name="color:Background" content="#ccc"/>
+          <meta name="color:Content Background" content="#fff"/>
+          <meta name="font:Body" content="Arial, Helvetica, sans-serif"/>
+          <meta name="color:Text" content="#000"/>
+          <style type="text/css">
+            #content {
+              background-color: #fff;
+              color: #000;
+              font: 30px Arial, Helvetica, sans-serif;
+            }
+          </style>
+        </head>
+        <body bgcolor="#ccc">
+          ...
+        </body>
+      </html>
+    ''')
