@@ -3,6 +3,9 @@
 
 This tool allows [custom Tumblr themes](http://www.tumblr.com/docs/en/custom_themes) to be parsed / rendered locally, so they can be used outside of Tumblr.
 
+It should be noted that this parser is slightly more strict than the one Tumblr uses. For example, each block tag must be matched with a closing block tag (omitting it will cause the parser to fail), and tags must open and close in the correct order (`{block:a}{block:b}{/block:b}{/block:a}` is correct, but `{block:a}{block:b}{/block:a}{/block:b}` will fail).
+
+This parser allows case insensitivity in tag and variable names (because we want to match the Tumblr compiler as closely as possible). However, you should still use PascalCase for all of your identifiers, because this is the convention in Tumblr themes.
 
 ## Usage
 ```bash
