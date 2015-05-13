@@ -1,7 +1,7 @@
 # Tumblr Theme Parser
 [![Build Status](http://img.shields.io/travis/slang800/tumblr-theme-parser.svg?style=flat-square)](https://travis-ci.org/slang800/tumblr-theme-parser) [![NPM version](http://img.shields.io/npm/v/tumblr-theme-parser.svg?style=flat-square)](https://www.npmjs.org/package/tumblr-theme-parser) [![NPM license](http://img.shields.io/npm/l/tumblr-theme-parser.svg?style=flat-square)](https://www.npmjs.org/package/tumblr-theme-parser)
 
-This tool allows [custom Tumblr themes](http://www.tumblr.com/docs/en/custom_themes) to be parsed / rendered locally, so they can be used outside of Tumblr.core2062
+This tool allows [custom Tumblr themes](http://www.tumblr.com/docs/en/custom_themes) to be parsed / rendered locally, so they can be used outside of Tumblr.
 
 
 ## Usage

@@ -5,7 +5,7 @@ allKeysToLowerCase = (obj) ->
   output = {}
   for i of obj
     if Object::toString.apply(obj[i]) is '[object Object]'
-      output[i.toLowerCase()] = allKeysToUpperCase(obj[i])
+      output[i.toLowerCase()] = allKeysToLowerCase(obj[i])
     else if Array.isArray(obj[i])
       output[i.toLowerCase()] = []
       for e in obj[i]
