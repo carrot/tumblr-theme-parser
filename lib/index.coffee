@@ -56,13 +56,16 @@ compile = (text, data = {}) ->
       else if element.type isnt 'block'
         type = element.type
         if type is ''
-          value = data[element.tagName]
-          if value?
-            output += value
-          else
-            console.warn "Variable \"#{element.tagName}\" is undefined"
+          key = element.tagName
+          value = data[key]
         else
-          output += data["#{type}:#{element.tagName}"]
+          key = "#{type}:#{element.tagName}"
+          value = data[key]
+
+        if value?
+          output += value
+        else
+          console.warn "Variable \"#{key}\" is undefined"
       else
         [blockType, blockName, invert] = (
           if element.tagName[0...5] is 'ifnot'

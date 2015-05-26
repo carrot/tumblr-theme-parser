@@ -454,3 +454,26 @@ describe 'compiler', ->
         </body>
       </html>
     ''')
+
+  it 'should output nothing for undefined vars', ->
+    compile('''
+      <html>
+        <head>
+          <style type="text/css">
+            #content {
+              background-color: {color:Background};
+            }
+          </style>
+        </head>
+      </html>
+    ''').should.equal('''
+      <html>
+        <head>
+          <style type="text/css">
+            #content {
+              background-color: ;
+            }
+          </style>
+        </head>
+      </html>
+    ''')
