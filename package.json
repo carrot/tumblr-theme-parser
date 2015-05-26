@@ -1,7 +1,7 @@
 {
   "name": "tumblr-theme-parser",
   "description": "parse and compile tumblr themes",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "Sean Lang <slang800@gmail.com>",
   "bin": {
     "tumblr-theme-parser": "./bin/index.js"
