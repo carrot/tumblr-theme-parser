@@ -397,3 +397,60 @@ describe 'compiler', ->
         </body>
       </html>
     ''')
+
+  it 'should compile "if" blocks referencing vars', ->
+    compile('''
+      <html>
+        <head>
+          <meta name="text:Twitter URL" content="https://twitter.com/slang800"/>
+        </head>
+        <body>
+          {block:IfTwitterURL}
+          <a href="{text:Twitter URL}">Twitter URL</a>
+          {/block:IfTwitterURL}
+
+          {block:IfNotTwitterURL}
+          <p>no twitter</p>
+          {/block:IfNotTwitterURL}
+        </body>
+      </html>
+    ''').should.equal('''
+      <html>
+        <head>
+          <meta name="text:Twitter URL" content="https://twitter.com/slang800"/>
+        </head>
+        <body>
+
+          <a href="https://twitter.com/slang800">Twitter URL</a>
+
+        </body>
+      </html>
+    ''')
+
+    compile('''
+      <html>
+        <head>
+          <meta name="text:Twitter URL" content=""/>
+        </head>
+        <body>
+          {block:IfTwitterURL}
+          <a href="{text:Twitter URL}">Twitter URL</a>
+          {/block:IfTwitterURL}
+
+          {block:IfNotTwitterURL}
+          <p>no twitter</p>
+          {/block:IfNotTwitterURL}
+        </body>
+      </html>
+    ''').should.equal('''
+      <html>
+        <head>
+          <meta name="text:Twitter URL" content=""/>
+        </head>
+        <body>
+
+          <p>no twitter</p>
+
+        </body>
+      </html>
+    ''')

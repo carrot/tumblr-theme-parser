@@ -64,12 +64,33 @@ compile = (text, data = {}) ->
         else
           output += data["#{type}:#{element.tagName}"]
       else
-        if element.tagName[0...5] is 'ifnot'
-          value = not data["if:#{element.tagName[5...]}"]
-        else if element.tagName[0...2] is 'if'
-          value = data["if:#{element.tagName[2...]}"]
-        else
-          value = data["block:#{element.tagName}"]
+        [blockType, blockName, invert] = (
+          if element.tagName[0...5] is 'ifnot'
+            ['if', "#{element.tagName[5...]}", true]
+          else if element.tagName[0...2] is 'if'
+            ['if', "#{element.tagName[2...]}", false]
+          else
+            ['block', "#{element.tagName}", false]
+        )
+
+        value = data["#{blockType}:#{blockName}"]
+
+        if blockType is 'if'
+          # if blocks can reference variables (which may have spaces in them),
+          # so we need to check all the vars
+          if not value?
+            for key in Object.keys(data)
+              if blockName is key.replace(/\s/g, '').replace(/^[a-z]+:/, '')
+                value = data[key]
+                break
+
+          if value? and value isnt ''
+            if typeof value isnt 'boolean' then value = true
+          else
+            # if it still doesn't exist, then the if block is false
+            value = false
+
+          if invert then value = not value
 
         if typeof value is 'boolean' and value
           # process children in current context, if value is false or undefiend
