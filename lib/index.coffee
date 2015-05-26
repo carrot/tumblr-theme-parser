@@ -60,7 +60,7 @@ compile = (text, data = {}) ->
           if value?
             output += value
           else
-            console.warn "Variable \"#{element.tagName}\" is not defined"
+            console.warn "Variable \"#{element.tagName}\" is undefined"
         else
           output += data["#{type}:#{element.tagName}"]
       else
