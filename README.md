@@ -1,6 +1,5 @@
 # Tumblr Theme Parser
-[![Build Status](http://img.shields.io/travis/carrot/tumblr-theme-parser.svg?style=flat-square)](https://travis-ci.org/carrot/tumblr-theme-parser) [![NPM version](http://img.shields.io/npm/v/tumblr-theme-parser.svg?style=flat-square)](https://www.npmjs.org/package/tumblr-theme-parser) [![NPM license](http://img.shields.io/npm/l/tumblr-theme-parser.svg?style=flat-square)](https://www.npmjs.org/package/tumblr-theme-parser)
-[![dependencies](http://img.shields.io/gemnasium/carrot/tumblr-theme-parser.svg?style=flat-square)](https://gemnasium.com/carrot/tumblr-theme-parser)
+[![Build Status](http://img.shields.io/travis/carrot/tumblr-theme-parser.svg?style=flat-square)](https://travis-ci.org/carrot/tumblr-theme-parser) [![NPM version](http://img.shields.io/npm/v/tumblr-theme-parser.svg?style=flat-square)](https://www.npmjs.org/package/tumblr-theme-parser) [![NPM license](http://img.shields.io/npm/l/tumblr-theme-parser.svg?style=flat-square)](https://www.npmjs.org/package/tumblr-theme-parser) [![dependencies](http://img.shields.io/gemnasium/carrot/tumblr-theme-parser.svg?style=flat-square)](https://gemnasium.com/carrot/tumblr-theme-parser)
 
 This tool allows [custom Tumblr themes](http://www.tumblr.com/docs/en/custom_themes) to be parsed / rendered locally, so they can be used outside of Tumblr.
 
@@ -98,7 +97,7 @@ The rendered HTML looks like this:
 </html>
 ```
 
-## JavaScript
+### JavaScript
 Usage in JavaScript is very simple. The module exports an object containing 2 functions: `compile` and `parse`. The `compile` function takes the input HTML & optional associated data, and returns the compiled HTML.
 
 ```javascript
