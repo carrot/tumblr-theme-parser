@@ -477,3 +477,34 @@ describe 'compiler', ->
         </head>
       </html>
     ''')
+
+  it 'should not mutate options object', ->
+    data = {}
+    compile(
+      '''
+        <html>
+          <head>
+            <meta name="color:Background" content="#ccc"/>
+            <style type="text/css">
+              #content {
+                background-color: {color:Background};
+              }
+            </style>
+          </head>
+        </html>
+      '''
+      data
+    ).should.equal('''
+      <html>
+        <head>
+          <meta name="color:Background" content="#ccc"/>
+          <style type="text/css">
+            #content {
+              background-color: #ccc;
+            }
+          </style>
+        </head>
+      </html>
+    ''')
+
+    Object.keys(data).length.should.eql(0)

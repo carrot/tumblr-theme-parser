@@ -1,5 +1,6 @@
 {parse} = require './parser'
 cheerio = require 'cheerio'
+clone = require 'lodash.clone'
 
 transformKeysRecursive = (obj, fn) ->
   output = {}
@@ -15,6 +16,7 @@ transformKeysRecursive = (obj, fn) ->
   output
 
 compile = (text, data = {}) ->
+  data = clone(data) # we're going to mutate it w/ info from meta tags
   $ = cheerio.load(text)
   metaTags = $('meta')
   for tag in metaTags
