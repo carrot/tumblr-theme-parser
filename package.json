@@ -27,6 +27,7 @@
   ],
   "license": "GPLv3",
   "main": "lib",
+  "repository": "git://github.com/slang800/tumblr-theme-parser.git",
   "scripts": {
     "test": "mocha"
   }
