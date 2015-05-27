@@ -255,7 +255,7 @@ describe 'compiler', ->
           'block:Body': true
           'block:Title': true
           'Body': '<p>test<br></p>'
-          'Permalink': 'http:/test.tumblr.com/post/118449891560/test'
+          'Permalink': 'http://test.tumblr.com/post/118449891560/test'
           'PostType': 'text'
           'Title': 'My first post'
         }
@@ -263,7 +263,7 @@ describe 'compiler', ->
           'block:Body': true
           'block:Title': true
           'Body': '<p>test<br></p>'
-          'Permalink': 'http:/test.tumblr.com/post/891560118449/test'
+          'Permalink': 'http://test.tumblr.com/post/891560118449/test'
           'PostType': 'text'
           'Title': 'My second post'
         }
@@ -277,7 +277,7 @@ describe 'compiler', ->
 
           <article class="text">
 
-            <a href="http:/test.tumblr.com/post/118449891560/test">
+            <a href="http://test.tumblr.com/post/118449891560/test">
               <h2>My first post</h2>
             </a>
 
@@ -287,7 +287,7 @@ describe 'compiler', ->
 
           <article class="text">
 
-            <a href="http:/test.tumblr.com/post/891560118449/test">
+            <a href="http://test.tumblr.com/post/891560118449/test">
               <h2>My second post</h2>
             </a>
 
