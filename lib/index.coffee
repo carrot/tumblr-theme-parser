@@ -51,19 +51,24 @@ compile = (text, data = {}) ->
   )
 
   output = ''
-  compileBlock = (ast, data) ->
+  compileBlock = (ast, data, searchParentScope) ->
+    searchScope = (type, tagName) ->
+      key = (
+        if type is ''
+          tagName
+        else
+          "#{type}:#{tagName}"
+      )
+      value = data[key]
+      if not value? and searchParentScope?
+        value = searchParentScope(type, tagName)
+      return value
+
     for element in ast
       if typeof element is 'string'
         output += element
       else if element.type isnt 'block'
-        type = element.type
-        if type is ''
-          key = element.tagName
-          value = data[key]
-        else
-          key = "#{type}:#{element.tagName}"
-          value = data[key]
-
+        value = searchScope(element.type, element.tagName)
         if value?
           output += value
         else
@@ -77,8 +82,7 @@ compile = (text, data = {}) ->
           else
             ['block', "#{element.tagName}", false]
         )
-
-        value = data["#{blockType}:#{blockName}"]
+        value = searchScope(blockType, blockName)
 
         if blockType is 'if'
           # if blocks can reference variables (which may have spaces in them),
@@ -100,14 +104,14 @@ compile = (text, data = {}) ->
         if typeof value is 'boolean' and value
           # process children in current context, if value is false or undefiend
           # then we just discard the children
-          compileBlock(element.contents, data)
+          compileBlock(element.contents, data, searchScope)
         else if Array.isArray(value)
           # process the contents of the element in each supplied context
           for context in value
-            compileBlock(element.contents, context)
+            compileBlock(element.contents, context, searchScope)
         else if typeof value is 'object'
           # process the contents of the element in the supplied context
-          compileBlock(element.contents, value)
+          compileBlock(element.contents, value, searchScope)
 
   ast = parse(text)
   compileBlock(ast, data)
