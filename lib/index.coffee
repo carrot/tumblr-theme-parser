@@ -60,6 +60,15 @@ compile = (text, data = {}) ->
           "#{type}:#{tagName}"
       )
       value = data[key]
+
+      # if blocks can reference variables (which may have spaces in them), so we
+      # need to check all the vars if we still didn't find it
+      if not value? and type is 'if'
+        for key in Object.keys(data)
+          if blockName is key.replace(/\s/g, '').replace(/^[a-z]+:/, '')
+            value = data[key]
+            break
+
       if not value? and searchParentScope?
         value = searchParentScope(type, tagName)
       return value

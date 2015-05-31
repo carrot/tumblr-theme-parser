@@ -508,3 +508,66 @@ describe 'compiler', ->
     ''')
 
     Object.keys(data).length.should.eql(0)
+
+  it 'should allow reference to vars in parent scopes', ->
+    compile(
+      '''
+      <html>
+        <head>
+          <title>{Title}</title>
+        </head>
+        <body>
+          {block:Posts}
+          <article>
+            <a href="{BlogURL}post/{post-id}">
+              <h2>{Title}</h2>
+              {block:IfName}
+              <p>published by {Name}</p>
+              {/block:IfName}
+            </a>
+          </article>
+          {/block:Posts}
+        </body>
+      </html>
+      '''
+      'Title': 'My Title'
+      'BlogURL': 'http://test.tumblr.com/'
+      'Name': 'thetestblog'
+      'block:Posts': [
+        {
+          'Title': 'My first post'
+          'post-id': '119958489489'
+        }
+        {
+          'Title': 'My second post'
+          'post-id': '118489489959'
+        }
+      ]
+    ).should.equal('''
+      <html>
+        <head>
+          <title>My Title</title>
+        </head>
+        <body>
+
+          <article>
+            <a href="http://test.tumblr.com/post/119958489489">
+              <h2>My first post</h2>
+
+              <p>published by thetestblog</p>
+
+            </a>
+          </article>
+
+          <article>
+            <a href="http://test.tumblr.com/post/118489489959">
+              <h2>My second post</h2>
+
+              <p>published by thetestblog</p>
+
+            </a>
+          </article>
+
+        </body>
+      </html>
+    ''')
