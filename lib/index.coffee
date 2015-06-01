@@ -65,7 +65,7 @@ compile = (text, data = {}) ->
       # need to check all the vars if we still didn't find it
       if not value? and type is 'if'
         for key in Object.keys(data)
-          if blockName is key.replace(/\s/g, '').replace(/^[a-z]+:/, '')
+          if tagName is key.replace(/\s/g, '').replace(/^[a-z]+:/, '')
             value = data[key]
             break
 
