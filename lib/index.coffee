@@ -50,7 +50,6 @@ compile = (text, data = {}) ->
     return key
   )
 
-  output = ''
   compileBlock = (ast, data, searchParentScope) ->
     searchScope = (type, tagName) ->
       key = (
@@ -73,15 +72,16 @@ compile = (text, data = {}) ->
         value = searchParentScope(type, tagName)
       return value
 
-    for element in ast
+    compileElement = (element) ->
       if typeof element is 'string'
-        output += element
+        return element
       else if element.type isnt 'block'
         value = searchScope(element.type, element.tagName)
         if value?
-          output += value
+          return value
         else
           console.warn "Variable \"#{key}\" is undefined"
+          return ''
       else
         [blockType, blockName, invert] = (
           if element.tagName[0...5] is 'ifnot'
@@ -103,29 +103,36 @@ compile = (text, data = {}) ->
           if invert then value = not value
 
         if typeof value is 'boolean' and value
-          # process children in current context, if value is false or undefiend
-          # then we just discard the children
-          compileBlock(element.contents, data, searchScope)
+          # process children in current context
+          return compileBlock(element.contents, data, searchScope)
         else if Array.isArray(value)
           # process the contents of the element in each supplied context
+          out = ''
           for context in value
-            compileBlock(element.contents, context, searchScope)
+            out += compileBlock(element.contents, context, searchScope)
+          return out
         else if typeof value is 'object'
           # process the contents of the element in the supplied context
-          compileBlock(element.contents, value, searchScope)
+          return compileBlock(element.contents, value, searchScope)
+        else
+          # if value is falsey or undefined then we just discard the children
+          return ''
+
+    output = ''
+    for element in ast
+      output += compileElement(element)
+    return output
 
   ast = parse(text)
-  compileBlock(ast, data)
-
-  output = output.split('\n')
+  result = compileBlock(ast, data).split('\n')
 
   # remove trailing whitespace
-  for i in [0...output.length]
-    output[i] = output[i].trimRight()
+  for i in [0...result.length]
+    result[i] = result[i].trimRight()
 
   # filter multiple sequential linebreaks
-  output = output.filter (val, i, arr) -> not (val is '' and arr[i - 1] is '')
+  result = result.filter (val, i, arr) -> not (val is '' and arr[i - 1] is '')
 
-  return output.join('\n')
+  return result.join('\n')
 
 module.exports = {compile, parse}
