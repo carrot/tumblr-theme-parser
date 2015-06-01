@@ -94,14 +94,6 @@ compile = (text, data = {}) ->
         value = searchScope(blockType, blockName)
 
         if blockType is 'if'
-          # if blocks can reference variables (which may have spaces in them),
-          # so we need to check all the vars
-          if not value?
-            for key in Object.keys(data)
-              if blockName is key.replace(/\s/g, '').replace(/^[a-z]+:/, '')
-                value = data[key]
-                break
-
           if value? and value isnt ''
             if typeof value isnt 'boolean' then value = true
           else
