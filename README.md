@@ -8,6 +8,8 @@ It should be noted that this parser is slightly more strict than the one Tumblr 
 This parser allows case insensitivity in tag and variable names (because we want to match the Tumblr compiler as closely as possible). However, you should still use PascalCase for all of your identifiers, because this is the convention in Tumblr themes.
 
 ## Usage
+Before you compile your theme, you probably need to download the data you want to show on the compiled page. To do this, you can go to `https://www.tumblr.com/customize_api/demo_content/<name of blog>` and save it as a JSON file. `<name of blog>` is the subdomain used when accessing the blog, so if your blog has the address `http://nasa.tumblr.com/`. You would find your content at `https://www.tumblr.com/customize_api/demo_content/nasa`.
+
 ### CLI
 The Markup of the theme is passed in via `STDIN`, and the compiled theme is sent to `STDOUT`. Data for the theme is passed in the form of a file path. Warnings (like undefined variables or other non-fatal issues) are sent to `STDERR`. A typical command might look like this:
 
@@ -98,7 +100,7 @@ The rendered HTML looks like this:
 ```
 
 ### JavaScript
-Usage in JavaScript is very simple. The module exports an object containing 2 functions: `compile` and `parse`. The `compile` function takes the input HTML & optional associated data, and returns the compiled HTML.
+Usage in JavaScript is very simple. The module exports an object containing 2 functions: `compile` and `parse`. The `compile` function takes the input HTML as a string and optional associated data as JSON, and returns the compiled HTML.
 
 ```javascript
 compile = require('tumblr-theme-parser').compile
