@@ -77,8 +77,6 @@ compile = (text, data = {}) ->
   if data?['block:Posts']?
     for post in data['block:Posts']
       for attr in attrs
-        console.log(attr, typeof post[attr], post[attr])
-
         if typeof post[attr] != 'undefined'
           value = post[attr]
 
