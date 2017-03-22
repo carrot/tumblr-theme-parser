@@ -13,9 +13,9 @@
   },
   "devDependencies": {
     "coffee-script": "^1.9.2",
-    "mocha": "^2.2.4",
+    "mocha": "^3.2.0",
     "pegjs": "^0.8.0",
-    "should": "^6.0.1"
+    "should": "^11.2.1"
   },
   "directories": {
     "test": "tests"
