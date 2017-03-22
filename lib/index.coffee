@@ -1,6 +1,7 @@
 {parse} = require './parser'
 cheerio = require 'cheerio'
 clone = require 'lodash.clone'
+jsesc = require 'jsesc'
 
 MIXINS = {
   likebutton: (data, {color, size}) ->
@@ -50,6 +51,42 @@ compile = (text, data = {}) ->
         v = true
 
     data[key] = v
+
+  # fix js-encoded variables
+  attrs = [
+    'Label',
+    'URL',
+    'Title',
+    'PostID',
+    'PostType',
+    'Quote',
+    'Source',
+    'LinkOpenTag',
+    'LinkCloseTag',
+    'PhotoAlt',
+    'Caption',
+    'Video-500',
+    'UserNumber',
+    'Name',
+    'Line',
+    'Body',
+    'AudioPlayer',
+    'PostNotes'
+  ]
+
+  if data?['block:Posts']?
+    for post in data['block:Posts']
+      for attr in attrs
+        console.log(attr, typeof post[attr], post[attr])
+
+        if typeof post[attr] != 'undefined'
+          value = post[attr]
+
+          post["JS#{attr}"] = jsesc(value, {
+            'lowercaseHex': true,
+            'quotes': 'single',
+            'wrap': true
+          })
 
   # fix up tumblr data
   if data?['block:Posts']?
